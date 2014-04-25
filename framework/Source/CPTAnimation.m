@@ -375,8 +375,7 @@ static CPTAnimation *instance = nil;
                             free(buffer);
                         }
                         else {
-                            IMP setterMethod = [boundObject methodForSelector:boundSetter];
-                            setterMethod(boundObject, boundSetter, tweenedValue);
+                            [boundObject performSelector:boundSetter withObject:tweenedValue];
                         }
 
                         if ( [animationDelegate respondsToSelector:@selector(animationDidUpdate:)] ) {
