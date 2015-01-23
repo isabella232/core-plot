@@ -322,8 +322,10 @@ NSString *const CPTScatterPlotBindingPlotSymbols = @"plotSymbols"; ///< Plot sym
     }
 
     CPTLineStyle *lineStyle = self.dataLineStyle;
-
-    if ( self.areaFill || self.areaFill2 || lineStyle.dashPattern || lineStyle.lineFill || (self.interpolation == CPTScatterPlotInterpolationCurved) ) {
+    
+    // MB: Hack to avoid major performance issue when rendering dashed lines. There is a quality trade-off where 
+    //     the dashed lines appear to sort of "jitter" as the phase of the dashes drift when scrolling the chart.
+    if ( self.areaFill || self.areaFill2 /*|| lineStyle.dashPattern*/ || lineStyle.lineFill || (self.interpolation == CPTScatterPlotInterpolationCurved) ) {
         // show all points to preserve the line dash and area fills
         for ( NSUInteger i = 0; i < dataCount; i++ ) {
             pointDrawFlags[i] = YES;
